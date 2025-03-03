@@ -10,13 +10,23 @@ interface ButtonProps {
 
 export const ButtonComponent : React.FC<ButtonProps> = ({text, onClick, icon, loading}) => {
     const [isLoading, setIsLoading] = useState<boolean>(loading || false);
-    const handleClick = () => {
-        if (onClick) {
+    // const handleClick = async () => {
+    //   if (onClick) {
+    //       setIsLoading(true);
+    //       onClick();
+    //       setTimeout(() => setIsLoading(false), 3000);
+    //     }
+    //   };
+    const handleClick = async () => {
+      if (onClick) {
           setIsLoading(true);
-          onClick();
-          setTimeout(() => setIsLoading(false), 3000);
-        }
-      };
+          try {
+              await onClick();
+          } finally {
+              setIsLoading(false);
+          }
+      }
+  };
   return (
     <Button
       type="text"

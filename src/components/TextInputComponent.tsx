@@ -16,7 +16,7 @@ export const TextInputComponent: React.FC<TextInputProps> = ({
   value,
   onChange,
   icon,
-  size = "middle",
+  size = "large",
 }) => {
   return (
     <Form.Item

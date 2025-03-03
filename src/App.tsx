@@ -14,9 +14,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<AdminLayouts><Home /></AdminLayouts>} />
+          <Route path="/home" element={<AdminLayouts><Home /></AdminLayouts>} />
           <Route path="/listener" element={<AdminLayouts><Listener /></AdminLayouts>} />
-          <Route path='/login' element = {<Login/>}></Route>
+          <Route path='/' element = {<Login/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

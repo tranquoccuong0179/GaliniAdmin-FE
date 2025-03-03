@@ -3,13 +3,31 @@ import { TextInputComponent } from '../components/TextInputComponent';
 import { ButtonComponent } from '../components/ButtonComponent';
 import { KeyOutlined, UserOutlined } from '@ant-design/icons';
 import { Form } from 'antd';
+import { login } from '../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 export const Login : React.FC = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const handleLogin = () =>{
-        console.log(username, password)
-    }
+    const navigate = useNavigate();
+
+    const handleLogin = async () => {
+      const result = await login(username, password);
+    
+      if (result.success && result.user) {
+        localStorage.setItem("user", JSON.stringify(result.user));
+    
+        if (result.user.roleEnum === "Admin") {
+          setTimeout(() => navigate("/home"), 2000);
+        } else {
+          console.log("Unauthorized");
+        }
+      } else {
+        console.error(result.message);
+      }
+    };
+    
+    
 
   return (
     <div style={{ backgroundColor: "#DECFFF", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -40,13 +58,16 @@ export const Login : React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             icon={<KeyOutlined />}
          />
+             <div style={{ marginTop: "50px" }}>
+        <ButtonComponent text="Login" onClick={handleLogin} />
+
+      </div>
+         
     </Form>
 
 
 
-    <div style={{ marginTop: "50px" }}>
-        <ButtonComponent text="Login" onClick={handleLogin} />
-      </div>
+
     </div>
   )
 }
