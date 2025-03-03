@@ -20,6 +20,7 @@ export const Login : React.FC = () => {
         if (result.user.roleEnum === "Admin") {
           setTimeout(() => navigate("/home"), 2000);
         } else {
+          localStorage.clear()
           console.log("Unauthorized");
         }
       } else {
