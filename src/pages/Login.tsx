@@ -19,8 +19,8 @@ export const Login: React.FC = () => {
       localStorage.setItem("user", JSON.stringify(result.user));
 
       if (result.user.roleEnum === "Admin") {
-        await toast.success("Đăng nhập thành công");
         setTimeout(() => navigate("/home"), 2000);
+        await toast.success("Đăng nhập thành công");
       } else {
         await toast.error("Đăng nhập thất bại");
         localStorage.clear();
