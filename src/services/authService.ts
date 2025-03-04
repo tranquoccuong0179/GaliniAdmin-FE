@@ -44,3 +44,7 @@ export const login = async (
     }
   }
 };
+
+export const logout = () => {
+  localStorage.clear();
+};

@@ -1,10 +1,12 @@
 // import { useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.css'
-import { Home } from './pages/Home'
-import { Login } from './pages/Login'
-import AdminLayouts from './layouts/AdminLayout'
-import { Listener } from './pages/Listener'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import { Home } from "./pages/Home";
+import { Login } from "./pages/Login";
+import AdminLayouts from "./layouts/AdminLayout";
+import { Listener } from "./pages/Listener";
+import { ToastContainer } from "react-toastify";
+import { AddBlog } from "./pages/AddBlog";
 // import AdminLayouts from './layouts/AdminLayout'
 
 function App() {
@@ -13,14 +15,39 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <ToastContainer />
         <Routes>
-          <Route path="/home" element={<AdminLayouts><Home /></AdminLayouts>} />
-          <Route path="/listener" element={<AdminLayouts><Listener /></AdminLayouts>} />
-          <Route path='/' element = {<Login/>}></Route>
+          <Route
+            path="/home"
+            element={
+              <AdminLayouts>
+                <Home />
+              </AdminLayouts>
+            }
+          />
+          <Route
+            path="/listener"
+            element={
+              <AdminLayouts>
+                <Listener />
+              </AdminLayouts>
+            }
+          />
+          <Route
+            path="/blog/add"
+            element={
+              <AdminLayouts>
+                <AddBlog />
+              </AdminLayouts>
+            }
+          />
+
+          <Route path="/logout" />
+          <Route path="/" element={<Login />}></Route>
         </Routes>
       </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
