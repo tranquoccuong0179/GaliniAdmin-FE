@@ -7,6 +7,7 @@ import AdminLayouts from "./layouts/AdminLayout";
 import { Listener } from "./pages/Listener";
 import { ToastContainer } from "react-toastify";
 import { AddBlog } from "./pages/AddBlog";
+import { AddListener } from "./pages/AddListener";
 // import AdminLayouts from './layouts/AdminLayout'
 
 function App() {
@@ -30,6 +31,14 @@ function App() {
             element={
               <AdminLayouts>
                 <Listener />
+              </AdminLayouts>
+            }
+          />
+          <Route
+            path="/listener/add"
+            element={
+              <AdminLayouts>
+                <AddListener />
               </AdminLayouts>
             }
           />

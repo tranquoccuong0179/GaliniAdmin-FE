@@ -2,19 +2,23 @@ import axios from "axios";
 import {
   CreateListenerInfoModel,
   GetListenerResponses,
+  ListenerResponse,
 } from "../dtos/typeListener";
 
-const API_URL = "https://localhost:7183/api/v1/listener";
+const API_URL = "https://harmon.love/api/v1/listener";
 
 export const listener = {
   createListener: async (request: CreateListenerInfoModel) => {
-    const { data } = await axios.post<GetListenerResponses>(API_URL, request);
+    const { data } = await axios.post<ListenerResponse>(API_URL, request);
     if (data.status !== "200") {
       return {
+        status: data.status,
         message: data.message,
+        data: data.data,
       };
     }
     return {
+      status: data.status,
       message: data.message,
     };
   },
@@ -27,5 +31,10 @@ export const listener = {
       console.error("Lỗi khi tải danh sách listener:", error);
       throw new Error("Không thể tải danh sách listener.");
     }
+  },
+
+  deleteListener: async (id: string) => {
+    const { data } = await axios.delete(`${API_URL}/${id}`);
+    return data;
   },
 };

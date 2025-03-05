@@ -37,6 +37,8 @@ export interface GetListenerResponse {
   description: string;
   star: number;
   price: number;
+  avatar: string;
+  gender: GenderEnum;
 }
 
 export interface GetListenersResponseData {
@@ -66,7 +68,7 @@ export interface RegisterUserRequest {
   phone: string;
   dateOfBirth: string;
   gender: GenderEnum;
-  avatarUrl?: string;
+  avatarUrl: string;
   weight: number;
 }
 

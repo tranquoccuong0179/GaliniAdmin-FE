@@ -21,7 +21,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({ value, onChange }) => {
 
     try {
       const response = await axios.post(
-        "https://localhost:7183/api/v1/upload-img", // Your API endpoint
+        "https://harmon.love/api/v1/upload-img", // Your API endpoint
         formData,
         {
           headers: {

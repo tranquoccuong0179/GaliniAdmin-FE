@@ -3,11 +3,16 @@ import { GetListenerResponse } from "../dtos/typeListener";
 import { listener } from "../services/listenerService";
 import { Table, message, Alert } from "antd";
 import Column from "antd/es/table/Column";
+import { ButtonComponent } from "../components/ButtonComponent";
+import { useNavigate } from "react-router-dom";
+import { DeleteOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
 
 export const Listener: React.FC = () => {
   const [listeners, setListeners] = useState<GetListenerResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchListeners = async () => {
@@ -35,22 +40,57 @@ export const Listener: React.FC = () => {
 
     fetchListeners();
   }, []);
+  
+  const handleButton = async () => (
+    navigate("/listener/add")
+  )
+
+  const handleDelete = async (id: string) => {
+    const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa người nghe này không")
+    console.log(id)
+    if(!confirmDelete)
+      return;
+    const result = await listener.deleteListener(id);
+    if(result.data){
+      toast.success("Xóa người dùng thành công");
+    }
+    else{
+      toast.error(result.message || "Xóa người dùng thất bại")
+    }
+  }
 
   return (
     <>
+    <div style={{ marginBottom: 16, textAlign: "right" }}>
+  <ButtonComponent text="Thêm người nghe" onClick={handleButton} />
+</div>
+
       {error && <Alert message={error} type="error" showIcon />}
       <Table<GetListenerResponse>
         dataSource={listeners}
         rowKey="id"
         loading={loading}
         bordered
-        pagination={{ pageSize: 5 }}
+        pagination={{ pageSize: 10 }}
       >
         <Column title="ID" dataIndex="id" key="id" />
         <Column title="Tên đầy đủ" dataIndex="fullName" key="fullName" />
         <Column title="Mô tả" dataIndex="description" key="description" />
         <Column title="Số sao" dataIndex="star" key="star" />
         <Column title="Giá" dataIndex="price" key="price" />
+        <Column title="Avatar" dataIndex="avatar" key="avatar" />
+        <Column title="Giới tính" dataIndex="gender" key="gender" />
+        <Column
+  title="Hành động"
+  key="actions"
+  render={(_, record: GetListenerResponse) => (
+    <ButtonComponent
+      text="Xóa"
+      icon={<DeleteOutlined />}
+      onClick={() => handleDelete(record.id)}
+    />
+  )}
+/>
       </Table>
     </>
   );
