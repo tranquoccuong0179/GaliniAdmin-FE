@@ -77,7 +77,7 @@ export const Listener: React.FC = () => {
         <Column title="Tên đầy đủ" dataIndex="fullName" key="fullName" />
         <Column title="Mô tả" dataIndex="description" key="description" />
         <Column title="Số sao" dataIndex="star" key="star" />
-        <Column title="Giá" dataIndex="price" key="price" />
+        <Column title="Giá" dataIndex="price" key="price" render={(price) => price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })} />
         <Column title="Avatar" dataIndex="avatar" key="avatar" />
         <Column title="Giới tính" dataIndex="gender" key="gender" />
         <Column
