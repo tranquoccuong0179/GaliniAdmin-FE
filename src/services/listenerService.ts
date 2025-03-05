@@ -1,19 +1,14 @@
 import axios from "axios";
 import {
   CreateListenerInfoModel,
-  ListenerResponse,
+  GetListenerResponses,
 } from "../dtos/typeListener";
 
-const API_URL = "https://harmon.love/api/v1/listener";
+const API_URL = "https://localhost:7183/api/v1/listener";
 
 export const listener = {
   createListener: async (request: CreateListenerInfoModel) => {
-    const { data } = await axios.post<ListenerResponse>(API_URL, request, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const { data } = await axios.post<GetListenerResponses>(API_URL, request);
     if (data.status !== "200") {
       return {
         message: data.message,
@@ -22,5 +17,15 @@ export const listener = {
     return {
       message: data.message,
     };
+  },
+
+  getListeners: async (): Promise<GetListenerResponses> => {
+    try {
+      const { data } = await axios.get<GetListenerResponses>(API_URL);
+      return data;
+    } catch (error) {
+      console.error("Lỗi khi tải danh sách listener:", error);
+      throw new Error("Không thể tải danh sách listener.");
+    }
   },
 };
