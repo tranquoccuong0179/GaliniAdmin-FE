@@ -14,56 +14,55 @@ export const Listener: React.FC = () => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchListeners = async () => {
-      try {
-        setLoading(true);
-        setError("");
+  // fetch Api Get
+  const fetchListeners = async () => {
+    try {
+      setLoading(true);
+      setError("");
 
-        const response = await listener.getListeners();
-        console.log("API Response:", response);
+      const response = await listener.getListeners();
+      console.log("API Response:", response);
 
-        if (response?.data?.items && Array.isArray(response.data.items)) {
-          setListeners(response.data.items);
-        } else {
-          console.error("Dữ liệu không phải mảng:", response.data);
-          setError("Dữ liệu trả về không hợp lệ.");
-        }
-      } catch (error) {
-        console.error("Lỗi khi lấy danh sách listener:", error);
-        setError("Không thể tải danh sách listener.");
-        message.error("Lỗi khi tải danh sách listener!");
-      } finally {
-        setLoading(false);
+      if (response?.data?.items && Array.isArray(response.data.items)) {
+        setListeners(response.data.items);
+      } else {
+        console.error("Dữ liệu không phải mảng:", response.data);
+        setError("Dữ liệu trả về không hợp lệ.");
       }
-    };
-
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách listener:", error);
+      setError("Không thể tải danh sách listener.");
+      message.error("Lỗi khi tải danh sách listener!");
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchListeners();
   }, []);
-  
-  const handleButton = async () => (
-    navigate("/listener/add")
-  )
+
+  const handleButton = async () => navigate("/listener/add");
 
   const handleDelete = async (id: string) => {
-    const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa người nghe này không")
-    console.log(id)
-    if(!confirmDelete)
-      return;
+    const confirmDelete = window.confirm(
+      "Bạn có chắc chắn muốn xóa người nghe này không"
+    );
+    console.log(id);
+    if (!confirmDelete) return;
     const result = await listener.deleteListener(id);
-    if(result.data){
+    if (result.data) {
       toast.success("Xóa người dùng thành công");
+      fetchListeners();
+    } else {
+      toast.error(result.message || "Xóa người dùng thất bại");
     }
-    else{
-      toast.error(result.message || "Xóa người dùng thất bại")
-    }
-  }
+  };
 
   return (
     <>
-    <div style={{ marginBottom: 16, textAlign: "right" }}>
-  <ButtonComponent text="Thêm người nghe" onClick={handleButton} />
-</div>
+      <div style={{ marginBottom: 16, textAlign: "right" }}>
+        <ButtonComponent text="Thêm người nghe" onClick={handleButton} />
+      </div>
 
       {error && <Alert message={error} type="error" showIcon />}
       <Table<GetListenerResponse>
@@ -77,20 +76,30 @@ export const Listener: React.FC = () => {
         <Column title="Tên đầy đủ" dataIndex="fullName" key="fullName" />
         <Column title="Mô tả" dataIndex="description" key="description" />
         <Column title="Số sao" dataIndex="star" key="star" />
-        <Column title="Giá" dataIndex="price" key="price" render={(price) => price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })} />
+        <Column
+          title="Giá"
+          dataIndex="price"
+          key="price"
+          render={(price) =>
+            price.toLocaleString("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            })
+          }
+        />
         <Column title="Avatar" dataIndex="avatar" key="avatar" />
         <Column title="Giới tính" dataIndex="gender" key="gender" />
         <Column
-  title="Hành động"
-  key="actions"
-  render={(_, record: GetListenerResponse) => (
-    <ButtonComponent
-      text="Xóa"
-      icon={<DeleteOutlined />}
-      onClick={() => handleDelete(record.id)}
-    />
-  )}
-/>
+          title="Hành động"
+          key="actions"
+          render={(_, record: GetListenerResponse) => (
+            <ButtonComponent
+              text="Xóa"
+              icon={<DeleteOutlined />}
+              onClick={() => handleDelete(record.id)}
+            />
+          )}
+        />
       </Table>
     </>
   );
