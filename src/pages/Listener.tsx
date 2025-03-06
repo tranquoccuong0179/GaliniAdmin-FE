@@ -76,7 +76,7 @@ export const Listener: React.FC = () => {
 
   return (
     <>
-      <div >
+      <div>
         <TextInputComponent
           label="Tên"
           value={name}
