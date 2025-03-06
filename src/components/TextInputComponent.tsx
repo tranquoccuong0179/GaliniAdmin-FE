@@ -4,7 +4,7 @@ import React from "react";
 interface TextInputProps {
   label: string;
   type?: string;
-  value: string;
+  value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   icon?: React.ReactNode;
   size?: "small" | "middle" | "large";
@@ -22,8 +22,8 @@ export const TextInputComponent: React.FC<TextInputProps> = ({
     <Form.Item
       label={label}
       labelAlign="left"
-      labelCol={{ span: 6 }} 
-      wrapperCol={{ span: 18 }} 
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 18 }}
       className="w-full"
       style={{ width: "420px" }}
     >

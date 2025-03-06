@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { GetListenerResponse } from "../dtos/typeListener";
+import { GetListenerResponse, ListenerTypeEnum } from "../dtos/typeListener";
 import { listener } from "../services/listenerService";
-import { Table, message, Alert } from "antd";
+import { Table, message, Alert, Select, Checkbox, Button } from "antd";
 import Column from "antd/es/table/Column";
 import { ButtonComponent } from "../components/ButtonComponent";
 import { useNavigate } from "react-router-dom";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, ReloadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
+import { TextInputComponent } from "../components/TextInputComponent";
 
 export const Listener: React.FC = () => {
   const [listeners, setListeners] = useState<GetListenerResponse[]>([]);
@@ -14,14 +15,29 @@ export const Listener: React.FC = () => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
+  const [name, setName] = useState<string | undefined>();
+  const [listenerTypeEnum, setListenerTypeEnum] = useState<
+    ListenerTypeEnum | undefined
+  >();
+  const [sortByName, setSortByName] = useState<boolean | undefined>();
+  const [sortByPrice, setSortByPrice] = useState<boolean | undefined>();
+  const [sortByStar, setSortByStar] = useState<boolean | undefined>();
+
   // fetch Api Get
   const fetchListeners = async () => {
     try {
       setLoading(true);
       setError("");
 
-      const response = await listener.getListeners();
+      const response = await listener.getListeners({
+        name,
+        listenerTypeEnum,
+        sortByName,
+        sortByPrice,
+        sortByStar,
+      });
       console.log("API Response:", response);
+      console.log(listenerTypeEnum);
 
       if (response?.data?.items && Array.isArray(response.data.items)) {
         setListeners(response.data.items);
@@ -60,10 +76,49 @@ export const Listener: React.FC = () => {
 
   return (
     <>
+      <div >
+        <TextInputComponent
+          label="Tên"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Select
+          placeholder="Loại người nghe"
+          onChange={(value) => setListenerTypeEnum(value)}
+          style={{ width: 200, marginRight: 8 }}
+        >
+          <Select.Option value="Tarot">Tarot</Select.Option>
+          <Select.Option value="Share">Chia sẻ</Select.Option>
+        </Select>
+
+        <Checkbox
+          checked={sortByName}
+          onChange={(e) => setSortByName(e.target.checked)}
+        >
+          Sắp xếp theo tên
+        </Checkbox>
+        <Checkbox
+          checked={sortByPrice}
+          onChange={(e) => setSortByPrice(e.target.checked)}
+        >
+          Sắp xếp theo giá
+        </Checkbox>
+        <Checkbox
+          checked={sortByStar}
+          onChange={(e) => setSortByStar(e.target.checked)}
+        >
+          Sắp xếp theo sao
+        </Checkbox>
+        <Button
+          shape="circle"
+          icon={<ReloadOutlined />}
+          onClick={fetchListeners}
+          style={{ backgroundColor: "#F7DCFF", color: "#9255BE" }}
+        />
+      </div>
       <div style={{ marginBottom: 16, textAlign: "right" }}>
         <ButtonComponent text="Thêm người nghe" onClick={handleButton} />
       </div>
-
       {error && <Alert message={error} type="error" showIcon />}
       <Table<GetListenerResponse>
         dataSource={listeners}

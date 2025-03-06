@@ -3,6 +3,7 @@ import {
   CreateListenerInfoModel,
   GetListenerResponses,
   ListenerResponse,
+  ListenerTypeEnum,
 } from "../dtos/typeListener";
 
 const API_URL = "https://localhost:7183/api/v1/listener";
@@ -23,9 +24,17 @@ export const listener = {
     };
   },
 
-  getListeners: async (): Promise<GetListenerResponses> => {
+  getListeners: async (params?: {
+    name?: string;
+    listenerTypeEnum?: ListenerTypeEnum;
+    sortByName?: boolean;
+    sortByPrice?: boolean;
+    sortByStar?: boolean;
+  }): Promise<GetListenerResponses> => {
     try {
-      const { data } = await axios.get<GetListenerResponses>(API_URL);
+      const { data } = await axios.get<GetListenerResponses>(API_URL, {
+        params,
+      });
       return data;
     } catch (error) {
       console.error("Lỗi khi tải danh sách listener:", error);
