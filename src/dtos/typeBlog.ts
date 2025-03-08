@@ -1,7 +1,7 @@
-export interface BlogResponse {
+export interface BlogResponse<T> {
   status: string;
   message: string;
-  data: BlogData;
+  data: T;
 }
 
 export interface BlogData {
@@ -13,4 +13,12 @@ export interface BlogData {
 export interface BlogRequest {
   title: string;
   content: string;
+}
+
+export interface GetBlogs {
+  size: number;
+  page: number;
+  total: number;
+  totalPages: number;
+  items: BlogData[];
 }

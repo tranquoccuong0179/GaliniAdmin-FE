@@ -14,7 +14,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const items = [
   { icon: UserOutlined, title: "Listener", path: "/listener" },
   { icon: VideoCameraOutlined, title: "Home", path: "/home" },
-  { icon: UploadOutlined, title: "Blog", path: "/blog/add" },
+  { icon: UploadOutlined, title: "Blog", path: "/blog" },
   { icon: LogoutOutlined, title: "Logout", path: "/logout" },
 ].map((item, index) => ({
   key: String(index + 1),

@@ -5,12 +5,14 @@ import BlogEditor from "../components/BlogEditor";
 import { ButtonComponent } from "../components/ButtonComponent";
 import { blog } from "../services/blogService";
 import { BlogRequest } from "../dtos/typeBlog";
+import { useNavigate } from "react-router-dom";
 
 export const AddBlog: React.FC = () => {
   const [blogData, setBlogData] = useState<{ title: string; content: string }>({
     title: "",
     content: "",
   });
+  const navigate = useNavigate();
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBlogData((prev) => ({ ...prev, title: e.target.value }));
@@ -32,6 +34,7 @@ export const AddBlog: React.FC = () => {
     };
     const result = await blog.createBlog(blogRequest, token);
     console.log(result);
+    navigate("/blog")
   };
 
   return (
