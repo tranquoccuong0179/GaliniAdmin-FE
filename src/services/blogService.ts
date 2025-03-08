@@ -5,7 +5,7 @@ import {
   BlogResponse,
   GetBlogs,
 } from "./../dtos/typeBlog";
-const API_URL = "https://harmon.love/api/v1/blog";
+const API_URL = "https://localhost:7183/api/v1/blog";
 
 export const blog = {
   createBlog: async (request: BlogRequest, token: string) => {
@@ -63,5 +63,10 @@ export const blog = {
         },
       };
     }
+  },
+
+  getBlog: async (id: string): Promise<BlogResponse<BlogData>> => {
+    const { data } = await axios.get(`${API_URL}/${id}`);
+    return data;
   },
 };

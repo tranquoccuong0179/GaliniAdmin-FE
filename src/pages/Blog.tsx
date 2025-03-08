@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BlogData } from "../dtos/typeBlog";
 import { blog } from "../services/blogService";
-import { Alert, Spin } from "antd";
+import { Alert, Button, Spin } from "antd";
 import styled from "styled-components";
-import DOMPurify from "dompurify"; // Bảo vệ khỏi XSS
+import DOMPurify from "dompurify";
+import { useNavigate } from "react-router-dom";
 
-// Styled Components
+// Styled Components(Content)
 const BlogContainer = styled.div`
   max-width: 800px;
   margin: 0 auto;
@@ -16,63 +17,67 @@ const BlogItem = styled.div`
   margin-bottom: 40px;
   border-bottom: 1px solid #ddd;
   padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+`;
+
+const BlogImage = styled.img`
+  max-width: 100px;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 8px;
+`;
+
+const BlogContentContainer = styled.div`
+  flex: 1;
 `;
 
 const BlogTitle = styled.h1`
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
-  text-align: center;
-  margin-bottom: 10px;
+  margin: 10px 0;
 `;
 
 const BlogMeta = styled.p`
-  text-align: center;
   font-size: 14px;
   color: gray;
-  margin-bottom: 20px;
+  margin: 5px 0;
 `;
 
-// const BlogImage = styled.img`
-//   max-width: 100%;
-//   max-height: 400px; /* Giới hạn chiều cao */
-//   height: auto;
-//   display: block;
-//   margin: 10px auto; /* Căn giữa ảnh */
-//   border-radius: 8px;
-//   object-fit: contain; /* Giữ nguyên tỷ lệ ảnh */
+// const BlogStats = styled.div`
+//   font-size: 14px;
+//   color: #555;
+//   margin: 5px 0;
 // `;
 
-
-const BlogContent = styled.div`
+const BlogContentPreview = styled.div`
   font-size: 16px;
   line-height: 1.8;
   color: #333;
-  margin-top: 20px;
-
-  p {
-    margin: 10px 0;
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 10px auto;
-    border-radius: 5px;
-  }
+  margin-top: 10px;
+  max-height: 100px;
+  overflow: hidden;
 `;
 
-// const ReadMoreButton = styled(Button)`
-//   display: block;
-//   margin: 20px auto;
-//   text-align: center;
-// `;
+const BlogContentFull = styled.div`
+  font-size: 16px;
+  line-height: 1.8;
+  color: #333;
+  margin-top: 10px;
+`;
+
+const ReadMoreButton = styled(Button)`
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+`;
 
 const Blog: React.FC = () => {
   const [blogs, setBlogs] = useState<BlogData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-  // const navigate = useNavigate();
+  const [expandedBlogId, setExpandedBlogId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -93,9 +98,16 @@ const Blog: React.FC = () => {
     fetchBlogs();
   }, []);
 
-  // const handleReadMore = (id: string) => {
-  //   navigate(`/blog/${id}`);
-  // };
+  const handleReadMore = (id: string) => {
+    setExpandedBlogId(id);
+    navigate(`/blog/${id}`);
+  };
+
+  // Hàm lấy tấm hình đầu tiên
+  const extractFirstImage = (content: string) => {
+    const match = content.match(/<img.*?src="(.*?)".*?>/);
+    return match ? match[1] : "";
+  };
 
   return (
     <BlogContainer>
@@ -104,20 +116,42 @@ const Blog: React.FC = () => {
 
       {blogs.map((blog) => (
         <BlogItem key={blog.id}>
-          <BlogTitle>{blog.title}</BlogTitle>
-          <BlogMeta>Published on {new Date().toLocaleDateString()} by Author</BlogMeta>
-          {/* {blog.content.includes("<img") && (
-            <BlogImage
-              src={blog.content.match(/<img.*?src="(.*?)".*?>/)?.[1]}
-              alt="Blog Cover"
+          {/** Image extraction */}
+          <BlogImage
+            src={extractFirstImage(blog.content)}
+            alt="Blog Thumbnail"
+          />
+
+          <BlogContentContainer>
+            <BlogTitle>{blog.title}</BlogTitle>
+            <BlogMeta>
+              Published on {new Date().toLocaleDateString()} by Author
+            </BlogMeta>
+            {/* <BlogStats>
+              {blog.likes} Likes | {blog.views} Views
+            </BlogStats> */}
+
+            <BlogContentPreview
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(blog.content.substring(0, 200)),
+              }}
             />
-          )} */}
 
-          <BlogContent dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }} />
+            {expandedBlogId === blog.id && (
+              <BlogContentFull
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(blog.content),
+                }}
+              />
+            )}
 
-          {/* <ReadMoreButton type="primary" onClick={() => handleReadMore(blog.id)}>
-            Read More
-          </ReadMoreButton> */}
+            <ReadMoreButton
+              type="primary"
+              onClick={() => handleReadMore(blog.id)}
+            >
+              {expandedBlogId === blog.id ? "Show Less" : "Read More"}
+            </ReadMoreButton>
+          </BlogContentContainer>
         </BlogItem>
       ))}
     </BlogContainer>

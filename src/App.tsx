@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import { AddBlog } from "./pages/AddBlog";
 import { AddListener } from "./pages/AddListener";
 import Blog from "./pages/Blog";
+import BlogDetail from "./pages/BlogDetail";
 // import AdminLayouts from './layouts/AdminLayout'
 
 function App() {
@@ -56,6 +57,14 @@ function App() {
             element={
               <AdminLayouts>
                 <AddBlog />
+              </AdminLayouts>
+            }
+          />
+          <Route
+            path="/blog/:id"
+            element={
+              <AdminLayouts>
+                <BlogDetail />
               </AdminLayouts>
             }
           />
