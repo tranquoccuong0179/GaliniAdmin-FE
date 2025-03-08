@@ -44,11 +44,11 @@ const BlogMeta = styled.p`
   margin: 5px 0;
 `;
 
-// const BlogStats = styled.div`
-//   font-size: 14px;
-//   color: #555;
-//   margin: 5px 0;
-// `;
+const BlogStats = styled.div`
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+`;
 
 const BlogContentPreview = styled.div`
   font-size: 16px;
@@ -127,9 +127,11 @@ const Blog: React.FC = () => {
             <BlogMeta>
               Published on {new Date().toLocaleDateString()} by Author
             </BlogMeta>
-            {/* <BlogStats>
-              {blog.likes} Likes | {blog.views} Views
-            </BlogStats> */}
+            {
+              <BlogStats>
+                {blog.like} Likes | {blog.view} Views
+              </BlogStats>
+            }
 
             <BlogContentPreview
               dangerouslySetInnerHTML={{
