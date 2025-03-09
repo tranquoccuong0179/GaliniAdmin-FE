@@ -8,8 +8,8 @@ export interface BlogData {
   id: string;
   title: string;
   content: string;
-  like?: number;
-  view?: number;
+  likes?: number;
+  views?: number;
 }
 
 export interface BlogRequest {

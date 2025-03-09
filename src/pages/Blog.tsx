@@ -129,7 +129,7 @@ const Blog: React.FC = () => {
             </BlogMeta>
             {
               <BlogStats>
-                {blog.like} Likes | {blog.view} Views
+                {blog.likes} Likes | {blog.views} Views
               </BlogStats>
             }
 
