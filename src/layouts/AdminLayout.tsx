@@ -75,6 +75,7 @@ const AdminLayouts: React.FC<AdminLayoutsProps> = ({ children }) => {
               minHeight: "100vh",
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
+              backgroundColor: "#decfff",
             }}
           >
             {children}
