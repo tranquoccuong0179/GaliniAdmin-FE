@@ -69,4 +69,9 @@ export const blog = {
     const { data } = await axios.get(`${API_URL}/${id}`);
     return data;
   },
+
+  likeBlog: async (id: string): Promise<BlogResponse<BlogData>> => {
+    const { data } = await axios.get(`${API_URL}/${id}/like`);
+    return data;
+  },
 };

@@ -9,21 +9,25 @@ import { Avatar, Card } from "antd";
 const { Meta } = Card;
 
 interface BlogProps {
+  id: string;
   title: string;
   content: string;
   likes: number;
   views: number;
   imageUrl?: string;
+  onLike: (id: string) => void;
   onClick?: () => void;
 }
 
 const BlogCard: React.FC<BlogProps> = ({
+  id,
   title,
   content,
   likes,
   views,
   imageUrl,
   onClick,
+  onLike,
 }) => {
   return (
     <Card
@@ -35,7 +39,9 @@ const BlogCard: React.FC<BlogProps> = ({
         flexDirection: "column",
         justifyContent: "space-between", // Giúp phần actions luôn ở dưới cùng
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+        cursor: "pointer",
       }}
+      onClick={onClick}
       cover={
         <img
           alt="blog cover"
@@ -44,11 +50,15 @@ const BlogCard: React.FC<BlogProps> = ({
         />
       }
       actions={[
-        <span key="like">
+        <span key="like" onClick={(e) => {
+          e.stopPropagation();
+          onLike(id);
+        }} 
+        style={{ cursor: "pointer" }}>
           <HeartOutlined style={{ color: "red", marginRight: 5 }} />
           {likes}
         </span>,
-        <span key="view">
+        <span key="view" onClick={(e) => e.stopPropagation()}>
           <FundViewOutlined style={{ marginRight: 5 }} />
           {views}
         </span>,

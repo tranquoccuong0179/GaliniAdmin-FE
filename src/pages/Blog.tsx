@@ -54,6 +54,18 @@ const Blog: React.FC = () => {
     const match = content.match(/<img.*?src="(.*?)".*?>/);
     return match ? match[1] : "";
   };
+  const handleLike = async (id: string) => {
+    try {
+      const response = await blog.likeBlog(id);
+      setBlogs((prevBlogs) =>
+        prevBlogs.map((blog) =>
+          blog.id === id ? { ...blog, likes: response.data.likes } : blog
+        )
+      );
+    } catch (err) {
+      console.error("Lỗi khi like bài viết:", err);
+    }
+  };
 
   return (
     <BlogContainer>
@@ -63,12 +75,14 @@ const Blog: React.FC = () => {
       {blogs.map((blog) => (
         <BlogItem key={blog.id}>
           <BlogCard
+            id={blog.id}
             title={blog.title}
             content={blog.content.substring(0, 100) + "..."}
             likes={blog.likes || 0}
             views={blog.views || 0}
             imageUrl={extractFirstImage(blog.content)}
             onClick={() => navigate(`/blog/${blog.id}`)}
+            onLike={handleLike}
           />
         </BlogItem>
       ))}
