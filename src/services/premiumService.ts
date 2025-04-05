@@ -3,12 +3,12 @@ import { GetPremiums, PremiumResponse } from "../dtos/typePremium";
 
 const API_URL = "https://harmon.love/api/v1/premium";
 
-export const premium = {
-  getBlogs: async (params?: {
+export const premiumService = {
+  getPremiums: async (params?: {
     page?: number;
     size?: number;
     friend?: number;
-    timelimit: boolean;
+    timelimit?: boolean;
     match?: number;
     minPrice?: number;
     maxPrice?: number;

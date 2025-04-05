@@ -6,10 +6,11 @@ export interface PremiumResponse<T> {
 
 export interface PremiumData {
   id: string;
-  Type: string;
-  Friend?: number;
-  Match?: number;
-  Price?: number;
+  type: string;
+  friend?: number;
+  timelimit?: boolean;
+  match?: number;
+  price?: number;
 }
 
 export interface PremiumRequest {
