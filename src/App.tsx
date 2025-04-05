@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Home } from "./pages/Home";
+import { Dashboard } from "./pages/Dashboard";
 import { Login } from "./pages/Login";
 import AdminLayouts from "./layouts/AdminLayout";
 import { Listener } from "./pages/Listener";
@@ -10,6 +10,7 @@ import { AddBlog } from "./pages/AddBlog";
 import { AddListener } from "./pages/AddListener";
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
+import { Premium } from "./pages/Premium";
 // import AdminLayouts from './layouts/AdminLayout'
 
 function App() {
@@ -21,10 +22,10 @@ function App() {
         <ToastContainer />
         <Routes>
           <Route
-            path="/home"
+            path="/dashboard"
             element={
               <AdminLayouts>
-                <Home />
+                <Dashboard />
               </AdminLayouts>
             }
           />
@@ -41,6 +42,14 @@ function App() {
             element={
               <AdminLayouts>
                 <AddListener />
+              </AdminLayouts>
+            }
+          />
+          <Route
+            path="/premium"
+            element={
+              <AdminLayouts>
+                <Premium />
               </AdminLayouts>
             }
           />

@@ -1,9 +1,10 @@
 import React from "react";
 import {
+  DashboardOutlined,
   LogoutOutlined,
+  PoundOutlined,
   UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -12,9 +13,10 @@ import { logout } from "../services/authService";
 const { Header, Content, Footer, Sider } = Layout;
 
 const items = [
+  { icon: DashboardOutlined, title: "Dashboard", path: "/dashboard" },
   { icon: UserOutlined, title: "Listener", path: "/listener" },
-  { icon: VideoCameraOutlined, title: "Home", path: "/home" },
   { icon: UploadOutlined, title: "Blog", path: "/blog" },
+  { icon: PoundOutlined, title: "Premium", path: "/premium" },
   { icon: LogoutOutlined, title: "Logout", path: "/logout" },
 ].map((item, index) => ({
   key: String(index + 1),

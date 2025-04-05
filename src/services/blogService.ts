@@ -29,9 +29,14 @@ export const blog = {
     };
   },
 
-  getBlogs: async (): Promise<BlogResponse<GetBlogs>> => {
+  getBlogs: async (params?: {
+    page?: number;
+    size?: number;
+  }): Promise<BlogResponse<GetBlogs>> => {
     try {
-      const { data } = await axios.get<BlogResponse<GetBlogs>>(API_URL);
+      const { data } = await axios.get<BlogResponse<GetBlogs>>(API_URL, {
+        params,
+      });
 
       if (data.status === "200") {
         return data;

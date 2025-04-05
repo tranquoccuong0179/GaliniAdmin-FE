@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetListenerResponse, ListenerTypeEnum } from "../dtos/typeListener";
 import { listener } from "../services/listenerService";
-import { Table, message, Alert, Select, Checkbox, Button } from "antd";
+import { Table, message, Alert, Select, Checkbox, Button, TablePaginationConfig } from "antd"; // Import TablePaginationConfig
 import Column from "antd/es/table/Column";
 import { ButtonComponent } from "../components/ButtonComponent";
 import { useNavigate } from "react-router-dom";
@@ -22,8 +22,11 @@ export const Listener: React.FC = () => {
   const [sortByName, setSortByName] = useState<boolean | undefined>();
   const [sortByPrice, setSortByPrice] = useState<boolean | undefined>();
   const [sortByStar, setSortByStar] = useState<boolean | undefined>();
+  
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
+  const [total, setTotal] = useState<number>(0);
 
-  // fetch Api Get
   const fetchListeners = async () => {
     try {
       setLoading(true);
@@ -35,12 +38,14 @@ export const Listener: React.FC = () => {
         sortByName,
         sortByPrice,
         sortByStar,
+        page: page,
+        size,
       });
       console.log("API Response:", response);
-      console.log(listenerTypeEnum);
 
       if (response?.data?.items && Array.isArray(response.data.items)) {
         setListeners(response.data.items);
+        setTotal(response.data.total || 0);
       } else {
         console.error("Dữ liệu không phải mảng:", response.data);
         setError("Dữ liệu trả về không hợp lệ.");
@@ -53,9 +58,10 @@ export const Listener: React.FC = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchListeners();
-  }, []);
+  }, [page, size, name, listenerTypeEnum, sortByName, sortByPrice, sortByStar]);
 
   const handleButton = async () => navigate("/listener/add");
 
@@ -63,7 +69,6 @@ export const Listener: React.FC = () => {
     const confirmDelete = window.confirm(
       "Bạn có chắc chắn muốn xóa người nghe này không"
     );
-    console.log(id);
     if (!confirmDelete) return;
     const result = await listener.deleteListener(id);
     if (result.data) {
@@ -72,6 +77,12 @@ export const Listener: React.FC = () => {
     } else {
       toast.error(result.message || "Xóa người dùng thất bại");
     }
+  };
+
+  // Update handleTableChange to use TablePaginationConfig
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    setPage(pagination.current || 1);
+    setSize(pagination.pageSize || 10); 
   };
 
   return (
@@ -125,7 +136,15 @@ export const Listener: React.FC = () => {
         rowKey="id"
         loading={loading}
         bordered
-        pagination={{ pageSize: 10 }}
+        pagination={{
+          current: page,
+          pageSize: size,
+          total: total,
+          pageSizeOptions: [5, 10, 20, 50],
+          showSizeChanger: true,
+          showTotal: (total) => `Tổng ${total} bản ghi`,
+        }}
+        onChange={handleTableChange}
       >
         <Column title="ID" dataIndex="id" key="id" />
         <Column title="Tên đầy đủ" dataIndex="fullName" key="fullName" />

@@ -30,7 +30,10 @@ export const listener = {
     sortByName?: boolean;
     sortByPrice?: boolean;
     sortByStar?: boolean;
+    page?: number;
+    size?: number;
   }): Promise<GetListenerResponses> => {
+    console.log("Request params:", params);
     try {
       const { data } = await axios.get<GetListenerResponses>(API_URL, {
         params,
