@@ -89,7 +89,7 @@ const Blog: React.FC = () => {
   return (
     <div>
       <div style={{ marginBottom: 16, textAlign: "right" }}>
-        <ButtonComponent text="Thêm gói Premium" onClick={handleButton} />
+        <ButtonComponent text="Thêm Blog" onClick={handleButton} />
       </div>
       <BlogContainer>
         {loading && <Spin size="large" />}
