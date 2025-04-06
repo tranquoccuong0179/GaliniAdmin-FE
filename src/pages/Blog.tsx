@@ -5,6 +5,7 @@ import { Alert, Pagination, Spin } from "antd";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import BlogCard from "../components/BlogCard"; // Import component mới
+import { ButtonComponent } from "../components/ButtonComponent";
 
 // Styled Components (Giữ nguyên style cũ)
 const BlogContainer = styled.div`
@@ -83,8 +84,13 @@ const Blog: React.FC = () => {
     setSize(newPageSize);
   };
 
+  const handleButton = () => navigate("/blog/add");
+
   return (
     <div>
+      <div style={{ marginBottom: 16, textAlign: "right" }}>
+        <ButtonComponent text="Thêm gói Premium" onClick={handleButton} />
+      </div>
       <BlogContainer>
         {loading && <Spin size="large" />}
         {error && <Alert message={error} type="error" showIcon />}

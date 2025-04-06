@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GetPremiums, PremiumResponse } from "../dtos/typePremium";
+import {
+  GetPremiums,
+  PremiumData,
+  PremiumRequest,
+  PremiumResponse,
+} from "../dtos/typePremium";
 
 const API_URL = "https://harmon.love/api/v1/premium";
 
@@ -21,5 +26,23 @@ export const premiumService = {
       params,
     });
     return data;
+  },
+
+  createPremium: async (request: PremiumRequest) => {
+    const { data } = await axios.post<PremiumResponse<PremiumData>>(
+      API_URL,
+      request
+    );
+    if (data.status !== "200") {
+      return {
+        status: data.status,
+        message: data.message,
+        data: data.data,
+      };
+    }
+    return {
+      status: data.status,
+      message: data.message,
+    };
   },
 };

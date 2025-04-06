@@ -6,6 +6,7 @@ interface ButtonProps {
   onClick: () => void;
   icon?: React.ReactNode;
   loading?: boolean;
+  style?:React.CSSProperties
 }
 
 export const ButtonComponent: React.FC<ButtonProps> = ({
@@ -13,6 +14,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
   onClick,
   icon,
   loading,
+  style
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(loading || false);
   // const handleClick = async () => {
@@ -50,6 +52,7 @@ export const ButtonComponent: React.FC<ButtonProps> = ({
         textAlign: "center",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
         transition: "background 0.3s ease",
+        ...style
       }}
       className="hover:bg-pink-300"
     >

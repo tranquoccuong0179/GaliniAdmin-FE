@@ -8,6 +8,8 @@ interface TextInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   icon?: React.ReactNode;
   size?: "small" | "middle" | "large";
+  placeholder?: string;
+  style?: React.CSSProperties
 }
 
 export const TextInputComponent: React.FC<TextInputProps> = ({
@@ -17,6 +19,8 @@ export const TextInputComponent: React.FC<TextInputProps> = ({
   onChange,
   icon,
   size = "large",
+  placeholder,
+  style
 }) => {
   return (
     <Form.Item
@@ -25,7 +29,7 @@ export const TextInputComponent: React.FC<TextInputProps> = ({
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 18 }}
       className="w-full"
-      style={{ width: "420px" }}
+      style={{ width: "420px", ...style}}
     >
       <Input
         size={size}
@@ -33,7 +37,7 @@ export const TextInputComponent: React.FC<TextInputProps> = ({
         value={value}
         onChange={onChange}
         prefix={icon}
-        placeholder={label}
+        placeholder={placeholder}
         className="rounded-lg w-full"
       />
     </Form.Item>

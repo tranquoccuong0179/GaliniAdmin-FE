@@ -3,6 +3,7 @@ import {
   DashboardOutlined,
   LogoutOutlined,
   PoundOutlined,
+  TransactionOutlined,
   UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -14,6 +15,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const items = [
   { icon: DashboardOutlined, title: "Dashboard", path: "/dashboard" },
+  { icon: TransactionOutlined, title: "Transaction", path: "/transaction" },
   { icon: UserOutlined, title: "Listener", path: "/listener" },
   { icon: UploadOutlined, title: "Blog", path: "/blog" },
   { icon: PoundOutlined, title: "Premium", path: "/premium" },
