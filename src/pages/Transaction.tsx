@@ -74,21 +74,25 @@ export const Transaction: React.FC = () => {
     <>
       <div>
         <TextInputComponent
+          style={{width: "30%"}}
           label="Tên"
           value={name}
           onChange={(e) => setName(e.target.value || undefined)}
         />
         <TextInputComponent
+          style={{width: "30%"}}
           label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value || undefined)}
         />
         <TextInputComponent
+          style={{width: "30%"}}
           label="Số điện thoại"
           value={phone}
           onChange={(e) => setPhone(e.target.value || undefined)}
         />
-        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+        <Form labelCol={{ span: 1.5 }} 
+            wrapperCol={{ span: 1 }}>
           <Form.Item label="Trạng thái">
             <Select
               placeholder="Chọn trạng thái"
@@ -99,7 +103,7 @@ export const Transaction: React.FC = () => {
                     : undefined
                 )
               }
-              style={{ width: 200 }}
+              style={{ width: 362, height: 40, marginLeft: 47 }}
             >
               <Select.Option value="SUCCESS">Thành công</Select.Option>
               <Select.Option value="PENDING">Đang chờ</Select.Option>
@@ -117,7 +121,7 @@ export const Transaction: React.FC = () => {
                     : undefined
                 )
               }
-              style={{ width: 200 }}
+              style={{ width: 362, height: 40, marginLeft: 22 }}
             >
               <Select.Option value="DEPOSIT">Nạp tiền</Select.Option>
               <Select.Option value="BOOKING">Đặt chỗ</Select.Option>
@@ -127,16 +131,19 @@ export const Transaction: React.FC = () => {
           </Form.Item>
         </Form>
         <TextInputComponent
+          style={{width: "30%"}}
           label="Số ngày trước"
           value={daysAgo?.toString()}
           onChange={(e) => setDaysAgo(e.target.value ? parseInt(e.target.value) : undefined)}
         />
         <TextInputComponent
+          style={{width: "30%"}}
           label="Số tuần trước"
           value={weeksAgo?.toString()}
           onChange={(e) => setWeeksAgo(e.target.value ? parseInt(e.target.value) : undefined)}
         />
         <TextInputComponent
+          style={{width: "30%"}}
           label="Số tháng trước"
           value={monthsAgo?.toString()}
           onChange={(e) => setMonthsAgo(e.target.value ? parseInt(e.target.value) : undefined)}

@@ -81,13 +81,14 @@ export const Premium: React.FC = () => {
     <>
       <div>
         <TextInputComponent
+          style={{width: "30%"}}
           label="Số bạn bè"
           value={friend?.toString()}
           onChange={(e) => setFriend(e.target.value ? parseInt(e.target.value) : undefined)}
         />
         <Form
-            labelCol={{ span: 8 }} 
-            wrapperCol={{ span: 16 }} 
+            labelCol={{ span: 1.5 }} 
+            wrapperCol={{ span: 1 }} 
             >
             <Form.Item label="Giới hạn thời gian">
                 <Select
@@ -95,7 +96,7 @@ export const Premium: React.FC = () => {
                 onChange={(value) =>
                     setTimelimit(value === "true" ? true : value === "false" ? false : undefined)
                 }
-                style={{ width: 200 }}
+                style={{ width: 360, height: 40 }}
                 >
                 <Select.Option value="true">Có</Select.Option>
                 <Select.Option value="false">Không</Select.Option>
@@ -104,16 +105,19 @@ export const Premium: React.FC = () => {
             </Form.Item>
         </Form>
         <TextInputComponent
+          style={{width: "30%"}}
           label="Số trận"
           value={match?.toString()}
           onChange={(e) => setMatch(e.target.value ? parseInt(e.target.value) : undefined)}
         />
         <TextInputComponent
+          style={{width: "30%"}}
           label="Giá tối thiểu"
           value={minPrice?.toString()}
           onChange={(e) => setMinPrice(e.target.value ? parseFloat(e.target.value) : undefined)}
         />
         <TextInputComponent
+          style={{width: "30%"}}
           label="Giá tối đa"
           value={maxPrice?.toString()}
           onChange={(e) => setMaxPrice(e.target.value ? parseFloat(e.target.value) : undefined)}
