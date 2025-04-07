@@ -46,7 +46,7 @@ export const Dashboard = () => {
     labels: dashboardData?.chart.labels || [],
     datasets: [
       {
-        label: 'Số lượng giao dịch',
+        label: 'Doanh thu',
         data: dashboardData?.chart.values || [],
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -63,7 +63,7 @@ export const Dashboard = () => {
       },
       title: {
         display: true,
-        text: 'Thống kê giao dịch theo tháng',
+        text: 'Thống kê doanh thu theo tháng',
         font: {
           size: 18,
         },
@@ -74,7 +74,7 @@ export const Dashboard = () => {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Số lượng',
+          text: 'Số tiền',
         },
       },
       x: {
