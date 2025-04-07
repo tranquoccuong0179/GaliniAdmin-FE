@@ -5,6 +5,7 @@ import {
   PoundOutlined,
   TransactionOutlined,
   UploadOutlined,
+  UsergroupAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
@@ -17,6 +18,7 @@ const items = [
   { icon: DashboardOutlined, title: "Dashboard", path: "/dashboard" },
   { icon: TransactionOutlined, title: "Transaction", path: "/transaction" },
   { icon: UserOutlined, title: "Listener", path: "/listener" },
+  { icon: UsergroupAddOutlined, title: "User", path: "/user" },
   { icon: UploadOutlined, title: "Blog", path: "/blog" },
   { icon: PoundOutlined, title: "Premium", path: "/premium" },
   { icon: LogoutOutlined, title: "Logout", path: "/logout" },

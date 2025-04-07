@@ -13,6 +13,7 @@ import BlogDetail from "./pages/BlogDetail";
 import { Premium } from "./pages/Premium";
 import { Transaction } from "./pages/Transaction";
 import { AddPremium } from "./pages/AddPremium";
+import { User } from "./pages/User";
 // import AdminLayouts from './layouts/AdminLayout'
 
 function App() {
@@ -36,6 +37,14 @@ function App() {
             element={
               <AdminLayouts>
                 <Listener />
+              </AdminLayouts>
+            }
+          />
+          <Route
+            path="/user"
+            element={
+              <AdminLayouts>
+                <User />
               </AdminLayouts>
             }
           />
