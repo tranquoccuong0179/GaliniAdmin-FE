@@ -46,7 +46,7 @@ export const Dashboard = () => {
     labels: dashboardData?.chart.labels || [],
     datasets: [
       {
-        label: 'Doanh thu',
+        label: 'Tiền nạp',
         data: dashboardData?.chart.values || [],
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -63,7 +63,7 @@ export const Dashboard = () => {
       },
       title: {
         display: true,
-        text: 'Thống kê doanh thu theo tháng',
+        text: 'Thống kê tiền nạp theo tháng',
         font: {
           size: 18,
         },
@@ -210,7 +210,7 @@ export const Dashboard = () => {
               }
             >
               <h3 style={{ margin: '0 0 10px', color: '#555' }}>
-                Tổng giá tiền giao dịch
+                Tổng số tiền nạp
               </h3>
               <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#f5222d' }}>
                 {dashboardData.totalTransaction.toLocaleString('vi-VN', {
